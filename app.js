@@ -1,5 +1,16 @@
 require('dotenv').config()
 
+// Require Mongoose
+const mongoose = require("mongoose");
+
+// Define a schema
+const Schema = mongoose.Schema;
+
+const SomeModelSchema = new Schema({
+  a_string: String,
+  a_date: Date,
+});
+
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = `mongodb+srv://dtkinger:${process.env.MONGO_USER_PASS}@cluster0.nrzeykd.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -66,5 +77,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
+console.log('App started!')
 module.exports = app;
