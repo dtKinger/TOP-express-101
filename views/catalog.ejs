@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+</head>
+<body>
+  <h1><%= title %></h1>
+  <ul>
+    <% for (let i = 0; i < list.length; i += 1){ %>
+      <h2><%= list[i].title %></h2>
+      <p><%= list[i].author %></p>
+      <blockquote><%= list[i].summary %></blockquote>
+    <% } %>
+  </ul>
+  <strong>Example book response:</strong>
+  <p><%= list[0] %></p>
+</body>
+</html>
