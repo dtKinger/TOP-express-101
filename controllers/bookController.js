@@ -14,7 +14,7 @@ exports.index = asyncHandler(async (req, res, next) => {
       numAvailableBookInstances,
       numAuthors,
       numGenres,
-    ] = await Promise.race([ // Add in my own timeout and race it against the db query
+    ] = await Promise.race([ // add in my own timeout of 5s as to race the Promise.all
       Promise.all([
         Book.countDocuments({}).exec(),
         BookInstance.countDocuments({}).exec(),
@@ -27,10 +27,9 @@ exports.index = asyncHandler(async (req, res, next) => {
 
     // Process the query results if they resolved successfully
     // ...
-    } catch (error) {
-      next(error); // Pass the error to the error-handling middleware
-    }
-  });
+  } catch (error) {
+    next(error); // Pass the error to the error-handling middleware
+  }
 
   res.render("index", {
     title: "Local Library Home",
@@ -39,6 +38,7 @@ exports.index = asyncHandler(async (req, res, next) => {
     book_instance_available_count: numAvailableBookInstances,
     author_count: numAuthors,
     genre_count: numGenres,
+  });
 });
 
 // Display list of all books.
