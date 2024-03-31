@@ -10,3 +10,20 @@ a {
 p {
   color: red;
 }
+
+.gap-10 {
+  gap: 10px;
+}
+
+.flex-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.flex-item{
+  display: flex;
+  padding: 5px 15px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
