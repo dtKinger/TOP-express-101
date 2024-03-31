@@ -1,4 +1,11 @@
-body {
+.sidebar-nav {
+  margin-top: 20px;
+  padding: 0;
+  list-style: none;
+}
+
+
+/* body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
@@ -26,4 +33,4 @@ p {
   padding: 5px 15px;
   border: 1px solid black;
   border-radius: 5px;
-}
+} */

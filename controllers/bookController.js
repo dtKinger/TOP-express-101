@@ -1,8 +1,45 @@
 const Book = require("../models/book");
+const Author = require("../models/author");
+const Genre = require("../models/genre");
+const BookInstance = require("../models/bookinstance");
+
 const asyncHandler = require("express-async-handler");
 
 exports.index = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Site Home Page");
+  // Get details of books, book instances, authors and genre counts (in parallel)
+  try {
+    const [
+      numBooks,
+      numBookInstances,
+      numAvailableBookInstances,
+      numAuthors,
+      numGenres,
+    ] = await Promise.race([ // Add in my own timeout and race it against the db query
+      Promise.all([
+        Book.countDocuments({}).exec(),
+        BookInstance.countDocuments({}).exec(),
+        BookInstance.countDocuments({ status: "Available" }).exec(),
+        Author.countDocuments({}).exec(),
+        Genre.countDocuments({}).exec(),
+      ]),
+      new Promise((resolve, reject) => setTimeout(() => reject(new Error("Timeout")), 5000)),
+    ]);
+
+    // Process the query results if they resolved successfully
+    // ...
+  } catch (error) {
+    next(error); // Pass the error to the error-handling middleware
+  }
+});
+
+  res.render("index", {
+    title: "Local Library Home",
+    book_count: numBooks,
+    book_instance_count: numBookInstances,
+    book_instance_available_count: numAvailableBookInstances,
+    author_count: numAuthors,
+    genre_count: numGenres,
+  });
 });
 
 // Display list of all books.
