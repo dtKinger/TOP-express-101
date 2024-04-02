@@ -7,13 +7,4 @@ router.get('/', function(req, res, next) {
   res.redirect('/catalog')
 });
 
-// Playing with req.params and URL parameters
-// router.get('/:user_id/*/:name', function (req, res, next) {
-//   res.send(req.params)
-// })
-
-router.get('/about', (req, res, next) => {
-  res.render('index', {title: 'About Us'})
-})
-
 module.exports = router;

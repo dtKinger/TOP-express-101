@@ -13,9 +13,7 @@ const book_instance_controller = require('../controllers/bookinstanceController'
 const genre_controller = require('../controllers/genreController')
 
 // Where the app.js redirect will land
-router.get('/', async function (req, res, next) {
-  res.send(`Redirected from '/' to '/catalog'`)
-})
+router.get('/', book_controller.index)
 
 // GET request for creating a Book. NOTE This must come before routes that display Book (uses id).
 router.get("/book/create", book_controller.book_create_get);

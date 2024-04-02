@@ -15,18 +15,6 @@ var app = express();
 // Set up mongoose connection
 const mongoose = require("mongoose");
 
-// Define a schema
-const Schema = mongoose.Schema;
-
-const SomeModelSchema = new Schema({
-  a_string: String,
-  a_date: Date,
-});
-
-const SomeModel = mongoose.model("SomeModel", SomeModelSchema)
-
-
-
 mongoose.set("strictQuery", false);
 const mongoDB = `mongodb+srv://dtkinger:${process.env.MONGO_USER_PASS}@cluster0.nrzeykd.mongodb.net/Libra?retryWrites=true&w=majority`;
 
@@ -56,8 +44,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/catalog', catalogRouter);
 app.use('/users', usersRouter);
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -7,29 +7,19 @@ const asyncHandler = require("express-async-handler");
 
 exports.index = asyncHandler(async (req, res, next) => {
   // Get details of books, book instances, authors and genre counts (in parallel)
-  try {
-    const [
-      numBooks,
-      numBookInstances,
-      numAvailableBookInstances,
-      numAuthors,
-      numGenres,
-    ] = await Promise.race([ // add in my own timeout of 5s as to race the Promise.all
-      Promise.all([
-        Book.countDocuments({}).exec(),
-        BookInstance.countDocuments({}).exec(),
-        BookInstance.countDocuments({ status: "Available" }).exec(),
-        Author.countDocuments({}).exec(),
-        Genre.countDocuments({}).exec(),
-      ]),
-      new Promise((resolve, reject) => setTimeout(() => reject(new Error("Timeout")), 5000)),
-    ]);
-
-    // Process the query results if they resolved successfully
-    // ...
-  } catch (error) {
-    next(error); // Pass the error to the error-handling middleware
-  }
+  const [
+    numBooks,
+    numBookInstances,
+    numAvailableBookInstances,
+    numAuthors,
+    numGenres,
+  ] = await Promise.all([
+    Book.countDocuments({}).exec(),
+    BookInstance.countDocuments({}).exec(),
+    BookInstance.countDocuments({ status: "Available" }).exec(),
+    Author.countDocuments({}).exec(),
+    Genre.countDocuments({}).exec(),
+  ]);
 
   res.render("index", {
     title: "Local Library Home",
@@ -40,6 +30,7 @@ exports.index = asyncHandler(async (req, res, next) => {
     genre_count: numGenres,
   });
 });
+
 
 // Display list of all books.
 exports.book_list = asyncHandler(async (req, res, next) => {
