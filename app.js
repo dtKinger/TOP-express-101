@@ -20,7 +20,6 @@ const mongoDB = `mongodb+srv://dtkinger:${process.env.MONGO_USER_PASS}@cluster0.
 
 main().catch((err) => console.log(err));
 async function main() {
-  
   await mongoose.connect(mongoDB);
   console.log('Mongoose connection opened...')
 
